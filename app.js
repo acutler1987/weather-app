@@ -2,13 +2,14 @@
 
 const express = require('express');
 const https = require('https');
+const config = require('./config');
+const apiKey = config.API_key;
+const uri = config.redirect_uri;
 const bodyParser = require('body-parser');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
-
-const APIKey = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx'; // <-- ****************DELETE BEFORE PUSHING TO REPO********************
 
 app.get('/', function (req, res) {
 	res.sendFile(__dirname + '/index.html');
@@ -16,7 +17,7 @@ app.get('/', function (req, res) {
 
 app.post('/', function (req, res) {
 	const city = req.body.cityName;
-	const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`;
+	const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
 
 	https.get(url, function (response) {
 		console.log(response.statusCode);
@@ -38,6 +39,6 @@ app.post('/', function (req, res) {
 	});
 });
 
-app.listen(3000, function () {
-	console.log('Server is listening on port 3000.');
+app.listen(8888, function () {
+	console.log('Server is listening on port 8888.');
 });
